@@ -1,0 +1,30 @@
+graph = {
+    'A': [('B', 1), ('C', 3)],
+    'B': [('D', 1)],
+    'C': [('D', 1)],
+    'D': []
+}
+
+h = {'A': 3, 'B': 2, 'C': 1, 'D': 0}
+
+start = 'A'
+goal = 'D'
+open_list = [(h[start], 0, start)]
+visited = []
+
+while open_list:
+    open_list.sort()
+    f, g, node = open_list.pop(0)
+
+    if node == goal:
+        print("Goal reached:", node)
+        print("Cost:", g)
+        break
+
+    if node not in visited:
+        visited.append(node)
+
+        for neighbor, cost in graph[node]:
+            new_g = g + cost
+            new_f = new_g + h[neighbor]
+            open_list.append((new_f, new_g, neighbor))
